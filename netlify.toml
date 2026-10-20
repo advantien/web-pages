@@ -1,0 +1,24 @@
+# Netlify configuration — advantien/web-pages
+# No build step: the repo root is served as-is.
+
+[build]
+  publish = "."
+
+# Root of go.advantien.com has no page of its own; send visitors to the main site.
+[[redirects]]
+  from = "/"
+  to = "https://www.advantien.com"
+  status = 302
+
+# Convenience: /impact (no trailing slash) → the page
+[[redirects]]
+  from = "/impact"
+  to = "/impact/"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
