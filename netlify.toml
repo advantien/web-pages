@@ -16,6 +16,11 @@
   to = "/impact/"
   status = 301
 
+[[redirects]]
+  from = "/case-costing"
+  to = "/case-costing/"
+  status = 301
+
 [[headers]]
   for = "/*"
   [headers.values]

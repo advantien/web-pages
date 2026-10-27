@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Case Costing in COREintel | Advantien</title>
+<meta name="description" content="Know the margin before the incision. COREintel case costing estimates what a surgical case will cost and earn before it is scheduled, from your ASC's own case history.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+body{margin:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.adv-cc section[id]{scroll-margin-top:12px}
+/* Same tokens and patterns as the Financial Impact page (.adv-impact), scoped to .adv-cc */
+.adv-cc{
+  --navy:#0f3251; --teal:#12798b; --orange:#c0682f;
+  --ink:#28414f; --slate:#41586a; --muted:#62798d;
+  --tile:#f1f6f8; --owash:#fdf4ed; --rule:#d8e1e6;
+  /* COREintel app colours, used only inside the product illustration */
+  --app-green:#117a65; --app-navy:#0e2a3d;
+  color-scheme:light;
+  background:#fff;color:var(--ink);
+  font-family:'Inter',-apple-system,system-ui,'Segoe UI',Helvetica,Arial,sans-serif;
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  min-height:100vh;display:flex;flex-direction:column;
+}
+.adv-cc,.adv-cc *{box-sizing:border-box;margin:0;padding:0}
+.adv-cc .wrap{max-width:1080px;margin:0 auto;padding-inline:20px;width:100%}
+.adv-cc a{color:var(--navy)}
+.adv-cc a:hover{color:var(--teal)}
+
+/* Header */
+.adv-cc header{border-bottom:3px solid var(--navy);background:#fff}
+.adv-cc .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:16px}
+.adv-cc .brand{display:flex;align-items:center;gap:14px}
+.adv-cc .brand svg{height:28px;width:auto;display:block}
+.adv-cc .vbar{width:1px;height:18px;background:var(--rule)}
+.adv-cc .kick{font-size:11px;color:var(--teal);letter-spacing:.15em;text-transform:uppercase;font-weight:800}
+.adv-cc .toplinks{display:flex;align-items:center;gap:20px;font-size:14px}
+.adv-cc .toplinks a{color:var(--navy);text-decoration:none;font-weight:600;white-space:nowrap}
+.adv-cc .toplinks a:hover{color:var(--teal)}
+.adv-cc .toplinks a.pill{background:var(--orange);color:#fff;padding:8px 14px;border-radius:7px}
+.adv-cc .toplinks a.pill:hover{background:#a85825;color:#fff}
+@media (max-width:720px){.adv-cc .toplinks .hidemob{display:none}}
+@media (max-width:560px){.adv-cc .vbar,.adv-cc .kick{display:none}}
+
+/* Type */
+.adv-cc .eyebrow{color:var(--orange);font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:800}
+.adv-cc .eyebrow::after{content:"";display:block;width:26px;height:3px;background:var(--orange);margin-top:6px}
+.adv-cc h1{font-size:clamp(30px,4.6vw,46px);font-weight:800;line-height:1.1;letter-spacing:-.02em;
+  color:var(--navy);margin-top:16px;text-wrap:balance}
+.adv-cc h1 .t2{display:block;color:var(--teal)}
+.adv-cc h2{font-size:clamp(24px,3vw,32px);font-weight:800;line-height:1.16;letter-spacing:-.016em;
+  color:var(--navy);margin-top:14px;text-wrap:balance}
+.adv-cc h3{font-size:17px;font-weight:800;color:var(--navy);letter-spacing:-.005em;line-height:1.3}
+.adv-cc .lead{font-size:clamp(16px,1.9vw,18px);color:var(--ink);margin-top:16px;max-width:52ch;text-wrap:pretty}
+.adv-cc .lead b{color:var(--navy);font-weight:800}
+.adv-cc p.body{font-size:16px;color:var(--slate);margin-top:14px;max-width:56ch;text-wrap:pretty}
+.adv-cc .center{text-align:center}
+.adv-cc .center .eyebrow::after{margin-inline:auto}
+.adv-cc .center .lead,.adv-cc .center p.body{margin-inline:auto}
+
+/* Buttons */
+.adv-cc .btn{display:inline-block;background:var(--orange);color:#fff;font-weight:700;font-size:16px;
+  padding:14px 26px;border-radius:8px;text-align:center;border:none;cursor:pointer;font-family:inherit;text-decoration:none}
+.adv-cc .btn:hover{background:#a85825;color:#fff}
+.adv-cc .btn.ghost{background:transparent;color:var(--navy);border:1.5px solid var(--rule)}
+.adv-cc .btn.ghost:hover{border-color:var(--navy);color:var(--navy)}
+.adv-cc .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.adv-cc .fineline{font-size:13px;color:var(--muted);margin-top:14px}
+
+/* Check points (same as Financial Impact) */
+.adv-cc .points{margin-top:20px;display:grid;gap:12px}
+.adv-cc .pt{display:flex;gap:12px;align-items:flex-start}
+.adv-cc .pt svg{color:var(--teal);flex-shrink:0;margin-top:1px}
+.adv-cc .pt .tx{font-size:15px;color:var(--slate)}
+.adv-cc .pt .tx b{color:var(--navy);font-weight:800}
+
+/* Sections */
+.adv-cc section{padding-block:76px}
+.adv-cc section.tint{background:var(--tile)}
+.adv-cc .mainbg{background:linear-gradient(180deg,#fff 0%,var(--tile) 100%)}
+.adv-cc .hero{padding-block:60px 72px}
+.adv-cc .cols{display:grid;grid-template-columns:1.02fr 1fr;gap:56px;align-items:center}
+@media (max-width:860px){.adv-cc .cols{grid-template-columns:1fr;gap:40px}}
+
+/* Product illustration (hero) */
+.adv-cc .appcard{background:#fff;border:1px solid var(--rule);border-radius:12px;
+  box-shadow:0 8px 40px rgba(15,50,81,.14);padding:22px 22px 18px}
+.adv-cc .ac-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.adv-cc .ac-title{font-size:16px;font-weight:700;color:var(--app-navy);line-height:1.3}
+.adv-cc .ac-sub{font-size:12.5px;color:var(--slate);line-height:1.45}
+.adv-cc .ac-sub.m{color:var(--muted)}
+.adv-cc .ac-best{text-align:right}
+.adv-cc .ac-best .l{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--app-green);white-space:nowrap}
+.adv-cc .ac-best .v{font-size:34px;font-weight:800;letter-spacing:-.02em;color:var(--app-green);line-height:1.1;font-variant-numeric:tabular-nums}
+.adv-cc .ac-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1px solid var(--rule);
+  padding-block:9px;margin-top:14px;text-align:center}
+.adv-cc .ac-stats .l{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.adv-cc .ac-stats .v{font-size:15px;font-weight:600;color:var(--app-navy);font-variant-numeric:tabular-nums;white-space:nowrap}
+.adv-cc .ac-chart{display:block;width:100%;height:auto;margin-top:12px}
+.adv-cc .ac-legend{border-top:1px solid var(--rule);padding-top:12px;margin-top:8px;display:grid;gap:6px}
+.adv-cc .ac-legend div{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--slate);line-height:1.35}
+.adv-cc .ac-legend b{color:var(--app-navy);font-weight:700}
+.adv-cc .badge{flex:none;width:19px;height:19px;border-radius:50%;color:#fff;font-size:11px;font-weight:800;
+  display:inline-flex;align-items:center;justify-content:center}
+@media (max-width:480px){.adv-cc .appcard{padding:16px 14px 14px}.adv-cc .ac-stats .v{font-size:12.5px;white-space:normal;line-height:1.35}.adv-cc .ac-stats .l{font-size:9.5px}.adv-cc .ac-best .v{font-size:28px}.adv-cc .ac-head{gap:10px}}
+.adv-cc .ac-note{font-size:11.5px;color:var(--muted);margin-top:12px}
+
+/* How it works */
+.adv-cc .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:40px;text-align:left}
+@media (max-width:760px){.adv-cc .steps{grid-template-columns:1fr}}
+.adv-cc .step{border-top:3px solid var(--navy);padding-top:16px}
+.adv-cc .step .n{font-size:12px;font-weight:800;letter-spacing:.15em;color:var(--teal)}
+.adv-cc .step h3{margin-top:6px}
+.adv-cc .step p{font-size:15px;color:var(--slate);margin-top:6px}
+
+/* Feature rows */
+.adv-cc .feat{display:grid;grid-template-columns:1fr 1.15fr;gap:56px;align-items:center}
+.adv-cc .feat.flip .copy{order:2}
+@media (max-width:860px){.adv-cc .feat{grid-template-columns:1fr;gap:32px}.adv-cc .feat.flip .copy{order:0}}
+
+/* App screenshots (transparent PNG/WebP with their own frame and shadow) */
+.adv-cc .caplink{display:block;cursor:zoom-in}
+.adv-cc .cap{display:block;width:auto;height:auto;max-width:100%;margin-inline:auto}
+.adv-cc .cap.tall{max-height:720px}
+.adv-cc .widefig{margin-top:36px}
+.adv-cc .widehead{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:end}
+@media (max-width:860px){.adv-cc .widehead{grid-template-columns:1fr;gap:8px}}
+.adv-cc .feat.flip.wideimg{grid-template-columns:1.3fr 1fr}
+@media (max-width:860px){.adv-cc .feat.flip.wideimg{grid-template-columns:1fr}}
+.adv-cc .modes-title{margin-top:44px;text-align:center}
+
+/* Modes */
+.adv-cc .modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}
+@media (max-width:760px){.adv-cc .modes{grid-template-columns:1fr}}
+.adv-cc .mode{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:20px}
+.adv-cc .mode.mid{border-top:4px solid var(--navy)}
+.adv-cc .mode .k{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+.adv-cc .mode p{font-size:14.5px;color:var(--slate);margin-top:6px}
+
+/* Trust */
+.adv-cc .trust{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;margin-top:40px}
+@media (max-width:760px){.adv-cc .trust{grid-template-columns:1fr;gap:24px}}
+.adv-cc .trust p{font-size:15px;color:var(--slate);margin-top:6px}
+
+/* Demo form (same as Financial Impact) */
+.adv-cc .john{margin-top:28px;border-left:3px solid var(--orange);padding-left:16px;font-size:14px;color:var(--slate)}
+.adv-cc .john b{color:var(--navy)}
+.adv-cc .john a{color:var(--navy);font-weight:700;text-decoration:none}
+.adv-cc .formcard{background:#fff;border-top:4px solid var(--navy);border-radius:10px;
+  padding:28px;box-shadow:0 8px 40px rgba(15,50,81,.14)}
+.adv-cc .ftitle{font-size:19px;font-weight:800;color:var(--navy);letter-spacing:-.01em}
+.adv-cc .fsub{font-size:13.5px;color:var(--slate);margin-top:4px}
+.adv-cc .fl{display:block;font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;
+  text-transform:uppercase;margin:16px 0 6px}
+.adv-cc .fl .opt{color:var(--muted);font-weight:600;text-transform:none;letter-spacing:0}
+.adv-cc input,.adv-cc select,.adv-cc textarea{width:100%;font:inherit;font-size:15px;
+  color:var(--ink);border:1.5px solid var(--rule);border-radius:6px;padding:11px 12px;background:#fff}
+.adv-cc input:focus,.adv-cc select:focus,.adv-cc textarea:focus{outline:2px solid var(--teal);
+  outline-offset:1px;border-color:var(--teal)}
+.adv-cc .frow{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+@media (max-width:480px){.adv-cc .frow{grid-template-columns:1fr}}
+.adv-cc .formcard .btn{display:block;width:100%;margin-top:22px}
+.adv-cc .formfine{font-size:12px;color:var(--muted);margin-top:12px;text-align:center}
+
+/* Footer */
+.adv-cc footer{background:#fff;border-top:1px solid var(--rule);padding-block:24px;font-size:12.5px;color:var(--muted)}
+.adv-cc .footrow{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.adv-cc .footrow svg{height:20px;width:auto;display:block}
+.adv-cc .footrow a{color:var(--navy);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+<div class="adv-cc">
+
+<header><div class="wrap topbar">
+  <div class="brand">
+    <a href="https://www.advantien.com" aria-label="Advantien home">
+    <svg viewBox="0 0 1642 308" role="img" aria-label="Advantien"><defs><linearGradient id="cc-logo-g1" x1="283.92" y1="0.28" x2="0" y2="308.28" gradientUnits="userSpaceOnUse"><stop stop-color="#0D7992"/><stop offset="1" stop-color="#5BC1E2"/></linearGradient></defs><path fill-rule="evenodd" clip-rule="evenodd" d="M169.68 0H111.16L0 302.4L192.92 63.28L169.68 0ZM89.04 241.92L3.92 307.72H65.8L89.04 241.92ZM98.28 235.2L221.2 139.72L284.2 308H215.88L189 235.2H98.28Z" fill="url(#cc-logo-g1)"/><g fill="#083344"><path d="M1509.54 74.032H1543.71L1608.97 181.328H1609.41V74.032H1641.6V233.968H1607.22L1542.17 126.896H1541.74V233.968H1509.54V74.032Z"/><path d="M1363.54 74.032H1480.49V103.6H1397.93V137.872H1473.7V165.2H1397.93V204.4H1482.24V233.968H1363.54V74.032Z"/><path d="M1296.54 74.032H1330.93V233.968H1296.54V74.032Z"/><path d="M1193.41 103.6H1146.54V74.032H1274.66V103.6H1227.79V233.968H1193.41V103.6Z"/><path d="M990.685 74.032H1024.85L1090.11 181.328H1090.55V74.032H1122.74V233.968H1088.36L1023.32 126.896H1022.88V233.968H990.685V74.032Z"/><path d="M875.389 172.144H915.904L896.194 113.456H895.756L875.389 172.144ZM878.674 74.032H913.933L972.406 233.968H936.709L924.883 198.352H866.41L854.146 233.968H819.544L878.674 74.032Z"/><path d="M785.579 233.968H746.816L696.227 74.032H731.486L766.307 186.48H766.745L802.004 74.032H837.482L785.579 233.968Z"/><path d="M584.929 204.4H615.589C620.553 204.4 625.371 203.579 630.043 201.936C634.715 200.293 638.876 197.605 642.526 193.872C646.176 189.989 649.096 184.987 651.286 178.864C653.476 172.741 654.571 165.275 654.571 156.464C654.571 148.4 653.768 141.157 652.162 134.736C650.702 128.165 648.22 122.565 644.716 117.936C641.212 113.307 636.54 109.797 630.7 107.408C625.006 104.869 617.925 103.6 609.457 103.6H584.929V204.4ZM550.546 74.032H617.998C628.072 74.032 637.416 75.6746 646.03 78.96C654.79 82.2453 662.309 87.1733 668.587 93.744C675.011 100.315 679.975 108.528 683.479 118.384C687.129 128.24 688.954 139.813 688.954 153.104C688.954 164.752 687.494 175.504 684.574 185.36C681.654 195.216 677.201 203.728 671.215 210.896C665.375 218.064 658.002 223.739 649.096 227.92C640.336 231.952 629.97 233.968 617.998 233.968H550.546V74.032Z"/><path d="M440.045 172.144H480.56L460.85 113.456H460.412L440.045 172.144ZM443.33 74.032H478.589L537.062 233.968H501.365L489.539 198.352H431.066L418.802 233.968H384.2L443.33 74.032Z"/></g></svg>
+    </a>
+    <div class="vbar"></div>
+    <div class="kick">Case Costing</div>
+  </div>
+  <nav class="toplinks">
+    <a class="hidemob" href="https://www.advantien.com" rel="noopener">advantien.com</a>
+    <a class="hidemob" href="tel:+17205284300">(720) 528-4300</a>
+    <a class="pill" href="#demo">Book a demo</a>
+  </nav>
+</div></header>
+
+<main>
+
+<!-- Hero -->
+<section class="hero mainbg"><div class="wrap cols">
+  <div>
+    <div class="eyebrow">COREintel case costing</div>
+    <h1>Know the margin <span class="t2">before the incision.</span></h1>
+    <p class="lead">See what a case will cost and earn before it is scheduled. Pick the surgeon,
+      CPT codes and payer, and COREintel builds the estimate from <b>your own facility&rsquo;s past cases</b>,
+      with the realistic range around every number.</p>
+    <div class="ctas">
+      <a class="btn" href="#demo">Book a demo</a>
+      <a class="btn ghost" href="#how">See how it works</a>
+    </div>
+    <p class="fineline">For ASC administrators, CFOs, materials managers and the surgeons they work with.</p>
+  </div>
+
+  <figure class="appcard" aria-label="Example COREintel case cost estimate">
+    <div class="ac-head">
+      <div>
+        <div class="ac-title">Sample Surgeon | CPT 29827</div>
+        <div class="ac-sub">Implant cost per case</div>
+        <div class="ac-sub m">64 past cases in the estimate</div>
+      </div>
+      <div class="ac-best"><div class="l">Best estimate</div><div class="v">$1,720</div></div>
+    </div>
+    <div class="ac-stats">
+      <div><div class="l">Typical</div><div class="v" style="font-weight:700">$1,720</div></div>
+      <div><div class="l">Most cases</div><div class="v">$1,290 &ndash; $4,120</div></div>
+      <div><div class="l">Full range</div><div class="v">$860 &ndash; $5,620</div></div>
+    </div>
+    <svg class="ac-chart" viewBox="0 0 260 110" role="img" aria-label="64 similar cases sorted from lowest to highest implant cost, coloured by implant cluster" font-family="Inter, Helvetica, Arial, sans-serif">
+      <path d="M30 10H258M30 40H258M30 70H258" stroke="#e6ecf0" stroke-width=".8" fill="none"/>
+      <path d="M30 100H258" stroke="#c3cfd7" stroke-width=".8" fill="none"/>
+      <g font-size="5.6" fill="#62798d" text-anchor="end"><text x="26" y="12">$6,000</text><text x="26" y="42">$4,000</text><text x="26" y="72">$2,000</text><text x="26" y="102">$0</text></g>
+      <text x="30" y="108" font-size="5.6" fill="#62798d">lowest</text><text x="258" y="108" font-size="5.6" fill="#62798d" text-anchor="end">highest</text>
+      <path d="M30 74.2H258" stroke="#117a65" stroke-width=".9" stroke-dasharray="3 2.5" fill="none"/>
+      <text x="258" y="71" text-anchor="end" font-size="5.6" font-weight="700" fill="#117a65">typical $1,720</text>
+      <path d="M30.0 87.1 55.1 87.1 58.7 80.7 101.7 80.7 105.3 74.2 148.4 74.2 152.0 67.8 162.7 67.8 166.3 44.6 191.4 44.6 195.0 38.2 223.7 38.2 227.3 22.2 241.7 22.2 245.2 15.7 256.0 15.7" stroke="#b9c7d1" stroke-width=".8" stroke-linejoin="round" fill="none"/>
+      <path d="M30.0 87.1h0M33.6 87.1h0M37.2 87.1h0M40.8 87.1h0M44.3 87.1h0M47.9 87.1h0M51.5 87.1h0M55.1 87.1h0M58.7 80.7h0M62.3 80.7h0M65.9 80.7h0M69.5 80.7h0M73.0 80.7h0M76.6 80.7h0M80.2 80.7h0M83.8 80.7h0M87.4 80.7h0M91.0 80.7h0M94.6 80.7h0M98.2 80.7h0M101.7 80.7h0M105.3 74.2h0M108.9 74.2h0M112.5 74.2h0M116.1 74.2h0M119.7 74.2h0M123.3 74.2h0M126.9 74.2h0M130.4 74.2h0M134.0 74.2h0M137.6 74.2h0M141.2 74.2h0M144.8 74.2h0M148.4 74.2h0M152.0 67.8h0M155.6 67.8h0M159.1 67.8h0M162.7 67.8h0" stroke="#117a65" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <path d="M166.3 44.6h0M169.9 44.6h0M173.5 44.6h0M177.1 44.6h0M180.7 44.6h0M184.3 44.6h0M187.8 44.6h0M191.4 44.6h0M195.0 38.2h0M198.6 38.2h0M202.2 38.2h0M205.8 38.2h0M209.4 38.2h0M213.0 38.2h0M216.5 38.2h0M220.1 38.2h0M223.7 38.2h0" stroke="#0e2a3d" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <path d="M227.3 22.2h0M230.9 22.2h0M234.5 22.2h0M238.1 22.2h0M241.7 22.2h0M245.2 15.7h0M248.8 15.7h0M252.4 15.7h0M256.0 15.7h0" stroke="#c0682f" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <circle cx="141.2" cy="74.2" r="4" fill="none" stroke="#0e2a3d" stroke-width="1.1"/>
+      <g font-size="6.5" font-weight="800" fill="#fff" text-anchor="middle">
+        <circle cx="96" cy="62" r="5.6" fill="#117a65"/><text x="96" y="64.3">A</text>
+        <circle cx="195" cy="25" r="5.6" fill="#0e2a3d"/><text x="195" y="27.3">B</text>
+        <circle cx="232" cy="8" r="5.6" fill="#c0682f"/><text x="232" y="10.3">C</text>
+      </g>
+    </svg>
+    <div class="ac-legend">
+      <div><span class="badge" style="background:#117a65">A</span><span><b>Anchors only</b> &middot; 38 cases &middot; typical $1,290</span></div>
+      <div><span class="badge" style="background:#0e2a3d">B</span><span><b>A + rotator-cuff patch</b> &middot; 17 cases &middot; typical $4,120</span></div>
+      <div><span class="badge" style="background:#c0682f">C</span><span><b>A + graft</b> &middot; 9 cases &middot; typical $5,190</span></div>
+    </div>
+    <figcaption class="ac-note">Illustrative example. Not a real surgeon, facility or price.</figcaption>
+  </figure>
+</div></section>
+
+<!-- How it works -->
+<section id="how"><div class="wrap center">
+  <div class="eyebrow">How it works</div>
+  <h2>From three inputs to a full estimate, in seconds.</h2>
+  <div class="steps">
+    <div class="step"><div class="n">01</div><h3>Enter the case</h3>
+      <p>Choose the surgeon, the CPT codes and the payer. Add a procedure description or implant if you like.</p></div>
+    <div class="step"><div class="n">02</div><h3>COREintel finds the closest matches</h3>
+      <p>Every past case at your facility is scored for how closely it matches, and the best matches drive the estimate.</p></div>
+    <div class="step"><div class="n">03</div><h3>See the estimate and the why</h3>
+      <p>Revenue, costs and profit with their ranges, plus which implants explain the difference between cases.</p></div>
+  </div>
+</div></section>
+
+<!-- Set up the estimate -->
+<section class="tint"><div class="wrap feat">
+  <div class="copy">
+    <div class="eyebrow">Set up the estimate</div>
+    <h2>Describe the case. Decide what counts as a match.</h2>
+    <p class="body">Link a scheduled case to pre-fill what&rsquo;s already known, or enter the details yourself.
+      Beyond the surgeon and CPT codes, everything is optional.</p>
+    <div class="points">
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>Payer or payer category,</b> one click for Commercial, Medicare, Medicaid, Self-pay and more.</div></div>
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>&ldquo;Must&rdquo; switches</b> make any input a hard requirement, like only this surgeon or every code.</div></div>
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>Minimum match score,</b> with a live count of how many cases each setting keeps, and an optional date range.</div></div>
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>Implant expectations:</b> name the manufacturer or known implants, or enter the rep&rsquo;s quote as the implant total.</div></div>
+    </div>
+  </div>
+  <a class="caplink" href="/case-costing/img/01-case-setup.webp" target="_blank" rel="noopener" aria-label="Open the case setup screenshot full size">
+    <img class="cap tall" src="/case-costing/img/01-case-setup.webp" width="1122" height="1536" loading="lazy"
+      alt="COREintel case setup: surgeon, CPT codes, payer buttons, Must switches, date range, minimum match score and implant expectations">
+  </a>
+</div></section>
+
+<!-- Feature 1 -->
+<section><div class="wrap">
+  <div class="widehead">
+    <div>
+      <div class="eyebrow">01 &middot; Instant estimates</div>
+      <h2>A full profit and loss for the case, before it&rsquo;s on the schedule.</h2>
+      <p class="body">Every estimate is built from the facility&rsquo;s real past cases, not benchmarks,
+        and each line shows the realistic range around it.</p>
+    </div>
+    <div class="points">
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>Every line of the P&amp;L:</b> expected revenue, implant cost, other direct costs, gross profit, indirect costs and net profit.</div></div>
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>Revenue follows the payer.</b> Revenue can come from that payer&rsquo;s cases across all surgeons, so it reflects the contract.</div></div>
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>Costs follow the surgeon,</b> drawn from their own cases, with the likely implant list and unit costs.</div></div>
+    </div>
+  </div>
+  <a class="caplink widefig" href="/case-costing/img/02-estimate.webp" target="_blank" rel="noopener" aria-label="Open the estimate screenshot full size">
+    <img class="cap" src="/case-costing/img/02-estimate.webp" width="2176" height="1086" loading="lazy"
+      alt="Estimated case profitability: expected revenue, implant and other direct costs, gross profit, indirect costs and net profit, each with its range, and a Conservative, Median or Optimistic switch">
+  </a>
+  <h3 class="modes-title">Three ways to read the estimate</h3>
+  <div class="modes">
+    <div class="mode"><div class="k">Conservative</div>
+      <p>Pairs lower revenue with higher costs, for a cautious number to plan around.</p></div>
+    <div class="mode mid"><div class="k">Median</div>
+      <p>The middle of your matched cases, for revenue and for every cost line.</p></div>
+    <div class="mode"><div class="k">Optimistic</div>
+      <p>Pairs higher revenue with lower costs, to show the upside when a case goes your way.</p></div>
+  </div>
+</div></section>
+
+<!-- Feature 2 -->
+<section class="tint"><div class="wrap">
+  <div class="widehead">
+    <div>
+      <div class="eyebrow">02 &middot; Best-match scoring</div>
+      <h2>Every past case scored for how closely it matches.</h2>
+      <p class="body">COREintel weighs the things that change a case&rsquo;s cost, so the estimate rests on
+        cases that really are like the one you&rsquo;re planning.</p>
+    </div>
+    <div class="points">
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>Scored on what matters:</b> primary CPT and other codes, surgeon, payer, procedure description, implants used and how recent the case is.</div></div>
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>Nothing hidden.</b> Every case shows its score and how well it matched, and opens to its implant lines.</div></div>
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>Works for newer surgeons too.</b> With fewer than five matching cases, it draws on other surgeons&rsquo; cases for the same work.</div></div>
+    </div>
+  </div>
+  <a class="caplink widefig" href="/case-costing/img/03-matched-cases.webp" target="_blank" rel="noopener" aria-label="Open the matched cases screenshot full size">
+    <img class="cap" src="/case-costing/img/03-matched-cases.webp" width="2176" height="1292" loading="lazy"
+      alt="Supporting historical cases: each matched case with revenue, implant cost, profit, match score and match type, opened to show its implant lines">
+  </a>
+</div></section>
+
+<!-- Feature 3 -->
+<section><div class="wrap feat flip wideimg">
+  <div class="copy">
+    <div class="eyebrow">03 &middot; Grouped by implants</div>
+    <h2>See why two similar-looking cases cost differently.</h2>
+    <p class="body">COREintel groups like surgeries by the implants they used, so a wide cost range turns into
+      a few clear patterns you can plan around.</p>
+    <div class="points">
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>Lettered clusters,</b> such as anchors only, anchors plus a patch, or anchors plus a graft, each with its typical cost and range.</div></div>
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>Which items, or how many?</b> See how much of the spread comes from the implants chosen, and how much from the count.</div></div>
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>Cost per extra anchor or screw,</b> shown when the unit count explains the difference.</div></div>
+    </div>
+  </div>
+  <a class="caplink" href="/case-costing/img/04-clusters.webp" target="_blank" rel="noopener" aria-label="Open the clusters screenshot full size">
+    <img class="cap tall" src="/case-costing/img/04-clusters.webp" width="2176" height="2500" loading="lazy"
+      alt="Implant cost chart with cases coloured by cluster, the likely implant list, and the By Cluster table with each cluster's typical cost and range">
+  </a>
+</div></section>
+
+<!-- Feature 4 -->
+<section class="tint"><div class="wrap feat">
+  <div class="copy">
+    <div class="eyebrow">04 &middot; Share in one click</div>
+    <h2>Share a clean picture with the surgeon.</h2>
+    <p class="body">&ldquo;Copy picture&rdquo; turns the estimate into an image sized for email, ready to paste
+      into a message to a surgeon, scheduler or board member.</p>
+    <div class="points">
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>Everything that matters:</b> the best estimate, typical and full ranges, the clusters and the likely implant list.</div></div>
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>No patient details.</b> Dates of service, record numbers and payer names are never included.</div></div>
+    </div>
+  </div>
+  <a class="caplink" href="/case-costing/img/05-share.webp" target="_blank" rel="noopener" aria-label="Open the shared picture screenshot full size">
+    <img class="cap tall" src="/case-costing/img/05-share.webp" width="1248" height="1516" loading="lazy"
+      alt="An email to a surgeon with the copied case estimate picture pasted in">
+  </a>
+</div></section>
+
+<!-- Trust -->
+<section><div class="wrap">
+  <div class="center">
+    <div class="eyebrow">Built on your data</div>
+    <h2>Your history, read correctly.</h2>
+  </div>
+  <div class="trust">
+    <div><h3>Your own cases, not benchmarks</h3>
+      <p>Estimates come from your facility&rsquo;s billing and supply records, so they reflect your surgeons, your payers and your prices.</p></div>
+    <div><h3>Implants identified precisely</h3>
+      <p>Advantien&rsquo;s catalog of more than 300,000 parts catches implants filed under the wrong category, or none.</p></div>
+    <div><h3>Scoped to your facilities</h3>
+      <p>Estimates only use the signed-in user&rsquo;s own facilities&rsquo; cases, and shared pictures carry no patient identifiers.</p></div>
+  </div>
+</div></section>
+
+<!-- Demo -->
+<section id="demo" class="mainbg"><div class="wrap cols" style="align-items:start">
+  <div>
+    <div class="eyebrow">Book a demo</div>
+    <h2>See case costing in action.</h2>
+    <p class="lead">A live walkthrough of COREintel case costing with our team, with time for your questions.</p>
+    <div class="points">
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>Watch an estimate come together,</b> from inputs to a full P&amp;L with its ranges.</div></div>
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>See the clusters explain a cost spread</b> on a common orthopedic procedure.</div></div>
+      <div class="pt"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tx"><b>Ask how it would work</b> with your center&rsquo;s data.</div></div>
+    </div>
+    <div class="john"><b>Prefer a person?</b> John Cornely &middot; Business Development<br>
+      <a href="tel:+18434253696">843-425-3696</a> &nbsp;&middot;&nbsp;
+      <a href="mailto:jcornely@advantien.com">jcornely@advantien.com</a></div>
+  </div>
+
+  <div class="formcard">
+    <div class="ftitle">Request a demo.</div>
+    <div class="fsub">Tell us a little about your center and we&rsquo;ll reach out to find a time.</div>
+    <form name="case-costing-demo" method="POST" action="/case-costing/thanks/"
+        data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="case-costing-demo">
+      <p hidden aria-hidden="true"><label>Leave this field empty: <input name="bot-field"></label></p>
+      <label class="fl" for="cc-name">Name</label>
+      <input id="cc-name" name="name" autocomplete="name" required>
+      <label class="fl" for="cc-email">Work email</label>
+      <input id="cc-email" name="email" type="email" autocomplete="email" required>
+      <label class="fl" for="cc-center">Surgery center</label>
+      <input id="cc-center" name="center" autocomplete="organization" required>
+      <div class="frow">
+        <div>
+          <label class="fl" for="cc-role">Your role</label>
+          <select id="cc-role" name="role">
+            <option>Administrator</option><option>CFO / finance</option><option>Materials manager</option>
+            <option>Surgeon</option><option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label class="fl" for="cc-phone">Phone <span class="opt">(optional)</span></label>
+          <input id="cc-phone" name="phone" type="tel" autocomplete="tel">
+        </div>
+      </div>
+      <label class="fl" for="cc-msg">Anything you&rsquo;d like to see? <span class="opt">(optional)</span></label>
+      <textarea id="cc-msg" name="message" rows="3"></textarea>
+      <button class="btn" type="submit">Request a demo</button>
+      <div class="formfine">No cost. No obligation. We&rsquo;ll never share your information.</div>
+    </form>
+  </div>
+</div></section>
+
+</main>
+
+<footer><div class="wrap">
+  <div class="footrow">
+    <svg viewBox="0 0 1642 308" role="img" aria-label="Advantien"><defs><linearGradient id="cc-logo-g2" x1="283.92" y1="0.28" x2="0" y2="308.28" gradientUnits="userSpaceOnUse"><stop stop-color="#0D7992"/><stop offset="1" stop-color="#5BC1E2"/></linearGradient></defs><path fill-rule="evenodd" clip-rule="evenodd" d="M169.68 0H111.16L0 302.4L192.92 63.28L169.68 0ZM89.04 241.92L3.92 307.72H65.8L89.04 241.92ZM98.28 235.2L221.2 139.72L284.2 308H215.88L189 235.2H98.28Z" fill="url(#cc-logo-g2)"/><g fill="#083344"><path d="M1509.54 74.032H1543.71L1608.97 181.328H1609.41V74.032H1641.6V233.968H1607.22L1542.17 126.896H1541.74V233.968H1509.54V74.032Z"/><path d="M1363.54 74.032H1480.49V103.6H1397.93V137.872H1473.7V165.2H1397.93V204.4H1482.24V233.968H1363.54V74.032Z"/><path d="M1296.54 74.032H1330.93V233.968H1296.54V74.032Z"/><path d="M1193.41 103.6H1146.54V74.032H1274.66V103.6H1227.79V233.968H1193.41V103.6Z"/><path d="M990.685 74.032H1024.85L1090.11 181.328H1090.55V74.032H1122.74V233.968H1088.36L1023.32 126.896H1022.88V233.968H990.685V74.032Z"/><path d="M875.389 172.144H915.904L896.194 113.456H895.756L875.389 172.144ZM878.674 74.032H913.933L972.406 233.968H936.709L924.883 198.352H866.41L854.146 233.968H819.544L878.674 74.032Z"/><path d="M785.579 233.968H746.816L696.227 74.032H731.486L766.307 186.48H766.745L802.004 74.032H837.482L785.579 233.968Z"/><path d="M584.929 204.4H615.589C620.553 204.4 625.371 203.579 630.043 201.936C634.715 200.293 638.876 197.605 642.526 193.872C646.176 189.989 649.096 184.987 651.286 178.864C653.476 172.741 654.571 165.275 654.571 156.464C654.571 148.4 653.768 141.157 652.162 134.736C650.702 128.165 648.22 122.565 644.716 117.936C641.212 113.307 636.54 109.797 630.7 107.408C625.006 104.869 617.925 103.6 609.457 103.6H584.929V204.4ZM550.546 74.032H617.998C628.072 74.032 637.416 75.6746 646.03 78.96C654.79 82.2453 662.309 87.1733 668.587 93.744C675.011 100.315 679.975 108.528 683.479 118.384C687.129 128.24 688.954 139.813 688.954 153.104C688.954 164.752 687.494 175.504 684.574 185.36C681.654 195.216 677.201 203.728 671.215 210.896C665.375 218.064 658.002 223.739 649.096 227.92C640.336 231.952 629.97 233.968 617.998 233.968H550.546V74.032Z"/><path d="M440.045 172.144H480.56L460.85 113.456H460.412L440.045 172.144ZM443.33 74.032H478.589L537.062 233.968H501.365L489.539 198.352H431.066L418.802 233.968H384.2L443.33 74.032Z"/></g></svg>
+    <div>Parker, Colorado &nbsp;&middot;&nbsp; <a href="tel:+13038767644">(303) 876-7644</a>
+      &nbsp;&middot;&nbsp; <a href="mailto:info@advantien.com">info@advantien.com</a>
+      &nbsp;&middot;&nbsp; <a href="https://www.advantien.com" rel="noopener">www.advantien.com</a></div>
+  </div>
+</div></footer>
+
+</div>
+</body>
+</html>
