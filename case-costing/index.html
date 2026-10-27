@@ -123,8 +123,10 @@ html{scroll-behavior:smooth}
 
 /* App screenshots (transparent PNG/WebP with their own frame and shadow) */
 .adv-cc .caplink{display:block;cursor:zoom-in}
-.adv-cc .cap{display:block;width:auto;height:auto;max-width:100%;margin-inline:auto}
-.adv-cc .cap.tall{max-height:720px}
+/* Width is set before the image loads, so the width/height attributes reserve its space and lazy loading
+   can't shift the page while it scrolls to #demo. Tall captures cap at 720px high via their aspect ratio (--ar). */
+.adv-cc .cap{display:block;width:100%;height:auto;max-width:100%;margin-inline:auto}
+.adv-cc .cap.tall{width:min(100%, calc(720px * var(--ar)))}
 .adv-cc .widefig{margin-top:36px}
 .adv-cc .widehead{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:end}
 @media (max-width:860px){.adv-cc .widehead{grid-template-columns:1fr;gap:8px}}
@@ -277,7 +279,7 @@ html{scroll-behavior:smooth}
     </div>
   </div>
   <a class="caplink" href="/case-costing/img/01-case-setup.webp" target="_blank" rel="noopener" aria-label="Open the case setup screenshot full size">
-    <img class="cap tall" src="/case-costing/img/01-case-setup.webp" width="1122" height="1536" loading="lazy"
+    <img class="cap tall" src="/case-costing/img/01-case-setup.webp" width="1122" height="1536" style="--ar:1122/1536" loading="lazy"
       alt="COREintel case setup: surgeon, CPT codes, payer buttons, Must switches, date range, minimum match score and implant expectations">
   </a>
 </div></section>
@@ -347,7 +349,7 @@ html{scroll-behavior:smooth}
     </div>
   </div>
   <a class="caplink" href="/case-costing/img/04-clusters.webp" target="_blank" rel="noopener" aria-label="Open the clusters screenshot full size">
-    <img class="cap tall" src="/case-costing/img/04-clusters.webp" width="2176" height="2500" loading="lazy"
+    <img class="cap tall" src="/case-costing/img/04-clusters.webp" width="2176" height="2500" style="--ar:2176/2500" loading="lazy"
       alt="Implant cost chart with cases coloured by cluster, the likely implant list, and the By Cluster table with each cluster's typical cost and range">
   </a>
 </div></section>
@@ -365,7 +367,7 @@ html{scroll-behavior:smooth}
     </div>
   </div>
   <a class="caplink" href="/case-costing/img/05-share.webp" target="_blank" rel="noopener" aria-label="Open the shared picture screenshot full size">
-    <img class="cap tall" src="/case-costing/img/05-share.webp" width="1248" height="1516" loading="lazy"
+    <img class="cap tall" src="/case-costing/img/05-share.webp" width="1248" height="1516" style="--ar:1248/1516" loading="lazy"
       alt="An email to a surgeon with the copied case estimate picture pasted in">
   </a>
 </div></section>
